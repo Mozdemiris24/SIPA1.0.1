@@ -1,7 +1,7 @@
 import { FileText, MessageSquare, Sparkles, LogOut, Zap, Plus, ChevronRight, User, MoreHorizontal, Trash2 } from "lucide-react";
 import { useState } from "react";
 
-export type ActiveView = "chat" | "pdf" | "create";
+export type ActiveView = "chat" | "pdf" | "create" | "profile";
 
 export interface ChatConversation {
   id: string;
@@ -21,6 +21,9 @@ interface SidebarProps {
   onDeleteConversation?: (id: string) => void;
   onLogout: () => void;
   userEmail: string;
+  userName: string;
+  userAvatar: string | null;
+  onProfileClick: () => void;
 }
 
 const navItems: { id: ActiveView; label: string; icon: React.ReactNode }[] = [
@@ -39,9 +42,11 @@ export function Sidebar({
   onLogout,
   onDeleteConversation,
   userEmail,
+  userName,
+  userAvatar,
+  onProfileClick,
 }: SidebarProps) {
   const [menuOpenId, setMenuOpenId] = useState<string | null>(null);
-  const displayName = userEmail.split("@")[0].replace(".", " ").replace(/\b\w/g, (l) => l.toUpperCase());
 
   return (
     <aside
@@ -211,20 +216,29 @@ export function Sidebar({
         style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}
       >
         <div className="flex items-center gap-2.5 px-2 py-2 rounded-lg" style={{ background: "rgba(255,255,255,0.04)" }}>
-          <div
-            className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0"
-            style={{ background: "rgba(232,132,26,0.25)" }}
+          <button
+            onClick={onProfileClick}
+            className="flex flex-1 items-center gap-2.5 min-w-0 text-left transition-opacity hover:opacity-80"
           >
-            <User size={14} style={{ color: "#E8841A" }} />
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-xs truncate" style={{ color: "#C8D8EC", fontWeight: 500 }}>
-              {displayName}
-            </p>
-            <p className="text-xs truncate" style={{ color: "#5A7A9A" }}>
-              {userEmail}
-            </p>
-          </div>
+            <div
+              className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden"
+              style={{ background: "rgba(232,132,26,0.25)" }}
+            >
+              {userAvatar ? (
+                <img src={userAvatar} alt={userName} className="w-full h-full object-cover" />
+              ) : (
+                <User size={14} style={{ color: "#E8841A" }} />
+              )}
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-xs truncate" style={{ color: "#C8D8EC", fontWeight: 500 }}>
+                {userName}
+              </p>
+              <p className="text-xs truncate" style={{ color: "#5A7A9A" }}>
+                {userEmail}
+              </p>
+            </div>
+          </button>
           <button
             onClick={onLogout}
             className="w-6 h-6 flex items-center justify-center rounded-md transition-colors flex-shrink-0"

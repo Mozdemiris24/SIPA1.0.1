@@ -4,6 +4,7 @@ import { Sidebar, ActiveView, ChatConversation } from "./components/Sidebar";
 import { ChatView, Conversation, Message } from "./components/ChatView";
 import { PdfView } from "./components/PdfView";
 import { CreateView } from "./components/CreateView";
+import { ProfileView } from "./components/ProfileView";
 
 /* MARKER-MAKE-KIT-INVOKED */
 
@@ -62,9 +63,14 @@ export default function App() {
   const [convData, setConvData] = useState<Record<string, Conversation>>(INITIAL_CONV_DATA);
   const [activeConvId, setActiveConvId] = useState<string | null>("c1");
   const [isChatLoading, setIsChatLoading] = useState(false);
+  const [userName, setUserName] = useState("Melihcan Özdemir"); // Varsayılan isim
+  const [userAvatar, setUserAvatar] = useState<string | null>(null);
 
   const handleLogin = useCallback((email: string) => {
     setUserEmail(email);
+    // İsteğe bağlı olarak e-postadan varsayılan isim oluştur
+    const defaultName = email.split("@")[0].replace(".", " ").replace(/\b\w/g, (l) => l.toUpperCase());
+    setUserName(defaultName);
     setIsLoggedIn(true);
   }, []);
 
@@ -163,13 +169,28 @@ export default function App() {
         onDeleteConversation={handleDeleteConversation}
         onLogout={handleLogout}
         userEmail={userEmail}
+        userName={userName}
+        userAvatar={userAvatar}
+        onProfileClick={() => setActiveView("profile")}
       />
       <main className="flex-1 min-w-0 overflow-hidden">
+        {activeView === "profile" && (
+          <ProfileView 
+            userEmail={userEmail}
+            userName={userName}
+            userAvatar={userAvatar}
+            onSave={(name, avatar) => {
+              setUserName(name);
+              setUserAvatar(avatar);
+            }}
+          />
+        )}
         {activeView === "chat" && (
           <ChatView
-            conversation={activeConversation}
+            conversation={activeConvId ? convData[activeConvId] : undefined}
             onSendMessage={handleSendMessage}
             isLoading={isChatLoading}
+            userAvatar={userAvatar}
           />
         )}
         {activeView === "pdf" && <PdfView />}

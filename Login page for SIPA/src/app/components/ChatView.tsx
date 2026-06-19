@@ -17,7 +17,8 @@ export interface Conversation {
 interface ChatViewProps {
   conversation: Conversation | null;
   onSendMessage: (content: string) => void;
-  isLoading: boolean;
+  isLoading?: boolean;
+  userAvatar?: string | null;
 }
 
 const SUGGESTED_PROMPTS = [
@@ -27,7 +28,7 @@ const SUGGESTED_PROMPTS = [
   "Teknik rapor şablonu hazırla",
 ];
 
-function MessageBubble({ message }: { message: Message }) {
+function MessageBubble({ message, userAvatar }: { message: Message, userAvatar?: string | null }) {
   const [copied, setCopied] = useState(false);
   const isUser = message.role === "user";
 
@@ -41,13 +42,17 @@ function MessageBubble({ message }: { message: Message }) {
     <div className={`flex gap-3 group ${isUser ? "flex-row-reverse" : "flex-row"}`}>
       {/* Avatar */}
       <div
-        className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
+        className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 overflow-hidden"
         style={{
           background: isUser ? "#0B1F3A" : "linear-gradient(135deg, #E8841A, #F5A93A)",
         }}
       >
         {isUser ? (
-          <User size={14} color="white" />
+          userAvatar ? (
+            <img src={userAvatar} alt="User" className="w-full h-full object-cover" />
+          ) : (
+            <User size={14} color="white" />
+          )
         ) : (
           <img src="/SIPAlogo.png?v=2" alt="SIPA" className="w-5 h-5 object-contain" />
         )}
@@ -147,7 +152,7 @@ function TypingIndicator() {
   );
 }
 
-export function ChatView({ conversation, onSendMessage, isLoading }: ChatViewProps) {
+export function ChatView({ conversation, onSendMessage, isLoading, userAvatar }: ChatViewProps) {
   const [input, setInput] = useState("");
   const bottomRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -258,7 +263,7 @@ export function ChatView({ conversation, onSendMessage, isLoading }: ChatViewPro
         ) : (
           <>
             {conversation.messages.map((msg) => (
-              <MessageBubble key={msg.id} message={msg} />
+              <MessageBubble key={msg.id} message={msg} userAvatar={userAvatar} />
             ))}
             {isLoading && <TypingIndicator />}
           </>
