@@ -39,7 +39,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
           {/* Logo */}
           <div className="flex items-center gap-3">
           <div className="w-12 h-12 flex items-center justify-center">
-            <img src="/SIPAlogo.png?v=2" alt="SIPA Logo" className="w-full h-full object-contain" />
+            <img src={`${import.meta.env.BASE_URL}SIPAlogo.png?v=2`} alt="SIPA Logo" className="w-full h-full object-contain" />
           </div>
           <div>
             <div className="text-white tracking-widest text-sm" style={{ fontWeight: 700, letterSpacing: "0.18em" }}>
@@ -83,7 +83,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
           {/* Mobile logo */}
           <div className="lg:hidden flex items-center gap-3 mb-8">
             <div className="w-10 h-10 flex items-center justify-center">
-              <img src="/SIPAlogo.png?v=2" alt="SIPA Logo" className="w-full h-full object-contain" />
+              <img src={`${import.meta.env.BASE_URL}SIPAlogo.png?v=2`} alt="SIPA Logo" className="w-full h-full object-contain" />
             </div>
             <div>
               <div className="text-sm tracking-widest" style={{ color: "#0B1F3A", fontWeight: 700 }}>İSTANBUL ENERJİ</div>

@@ -132,7 +132,7 @@ function Scene() {
   useEffect(() => {
     const loader = new OBJLoader();
     loader.load(
-      '/Logo3D.obj',
+      `${import.meta.env.BASE_URL}Logo3D.obj`,
       (loadedObj: THREE.Group) => {
         setObj(loadedObj);
       },

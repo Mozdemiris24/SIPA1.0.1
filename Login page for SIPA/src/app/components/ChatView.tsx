@@ -54,7 +54,7 @@ function MessageBubble({ message, userAvatar }: { message: Message, userAvatar?:
             <User size={14} color="white" />
           )
         ) : (
-          <img src="/SIPAlogo.png?v=2" alt="SIPA" className="w-5 h-5 object-contain" />
+          <img src={`${import.meta.env.BASE_URL}SIPAlogo.png?v=2`} alt="SIPA" className="w-5 h-5 object-contain" />
         )}
       </div>
 
@@ -128,7 +128,7 @@ function TypingIndicator() {
         className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
         style={{ background: "linear-gradient(135deg, #E8841A, #F5A93A)" }}
       >
-        <img src="/SIPAlogo.png?v=2" alt="SIPA" className="w-5 h-5 object-contain" />
+        <img src={`${import.meta.env.BASE_URL}SIPAlogo.png?v=2`} alt="SIPA" className="w-5 h-5 object-contain" />
       </div>
       <div
         className="px-4 py-3 rounded-2xl"
@@ -197,7 +197,7 @@ export function ChatView({ conversation, onSendMessage, isLoading, userAvatar }:
           className="w-8 h-8 rounded-lg flex items-center justify-center"
           style={{ background: "linear-gradient(135deg, #E8841A, #F5A93A)" }}
         >
-          <img src="/SIPAlogo.png?v=2" alt="SIPA" className="w-5 h-5 object-contain" />
+          <img src={`${import.meta.env.BASE_URL}SIPAlogo.png?v=2`} alt="SIPA" className="w-5 h-5 object-contain" />
         </div>
         <div>
           <h2 className="text-sm" style={{ color: "#0B1F3A", fontWeight: 600 }}>
@@ -226,7 +226,7 @@ export function ChatView({ conversation, onSendMessage, isLoading, userAvatar }:
               className="w-16 h-16 rounded-2xl flex items-center justify-center mb-5"
               style={{ background: "linear-gradient(135deg, #0B1F3A, #1A4A7A)" }}
             >
-              <img src="/SIPAlogo.png?v=2" alt="SIPA" className="w-10 h-10 object-contain" />
+              <img src={`${import.meta.env.BASE_URL}SIPAlogo.png?v=2`} alt="SIPA" className="w-10 h-10 object-contain" />
             </div>
             <h3 className="mb-2" style={{ color: "#0B1F3A", fontWeight: 600 }}>
               SIPA'ya Hoş Geldiniz

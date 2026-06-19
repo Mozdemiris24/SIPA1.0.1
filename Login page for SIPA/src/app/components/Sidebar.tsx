@@ -62,7 +62,7 @@ export function Sidebar({
           className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
           style={{ background: "#E8841A" }}
         >
-          <img src="/SIPAlogo.png?v=2" alt="SIPA" className="w-6 h-6 object-contain" />
+          <img src={`${import.meta.env.BASE_URL}SIPAlogo.png?v=2`} alt="SIPA" className="w-6 h-6 object-contain" />
         </div>
         <div>
           <div className="text-white text-xs tracking-widest" style={{ fontWeight: 700, letterSpacing: "0.16em", lineHeight: 1.2 }}>
