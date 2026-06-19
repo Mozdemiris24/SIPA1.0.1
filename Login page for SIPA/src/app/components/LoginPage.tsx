@@ -23,11 +23,8 @@ export function LoginPage({ onLogin }: LoginPageProps) {
     setLoading(true);
     await new Promise((r) => setTimeout(r, 800));
     setLoading(false);
-    if (email === "demo@istanbulenerji.com.tr" && password === "sipa2024") {
-      onLogin(email, password);
-    } else {
-      setError("E-posta adresi veya şifre hatalı. Demo: demo@istanbulenerji.com.tr / sipa2024");
-    }
+    // Demo ortamında herhangi bir girişle kabul et
+    onLogin(email, password);
   };
 
   return (
@@ -42,28 +39,22 @@ export function LoginPage({ onLogin }: LoginPageProps) {
           {/* Logo */}
           <div className="flex items-center gap-3">
           <div className="w-12 h-12 flex items-center justify-center">
-            <img src="/SIPAlogo.png" alt="SIPA Logo" className="w-full h-full object-contain -scale-x-100" />
+            <img src="/SIPAlogo.png?v=2" alt="SIPA Logo" className="w-full h-full object-contain" />
           </div>
           <div>
             <div className="text-white tracking-widest text-sm" style={{ fontWeight: 700, letterSpacing: "0.18em" }}>
               İSTANBUL ENERJİ
             </div>
             <div className="text-xs tracking-wider" style={{ color: "#E8841A", letterSpacing: "0.12em" }}>
-              SIPA — Yapay Zeka Asistanı
+              SIPA — Sistem İyileştirme ve Prosedür Asistanı
             </div>
           </div>
         </div>
 
         {/* Center quote */}
         <div className="relative">
-          <div
-            className="text-5xl mb-6 leading-none"
-            style={{ color: "#E8841A", fontWeight: 800, opacity: 0.4 }}
-          >
-            "
-          </div>
           <p className="text-white text-xl leading-relaxed" style={{ fontWeight: 300 }}>
-            Akıllı belgeler, daha hızlı kararlar, daha verimli süreçler.
+            Belgelerini düzenle, derin araştırma yap ve süreçlerini iyileştirecek uygulamalar oluştur.
           </p>
           <p className="mt-4 text-sm" style={{ color: "#8AAAC8" }}>
             İstanbul Enerji — Dijital Dönüşüm
@@ -92,7 +83,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
           {/* Mobile logo */}
           <div className="lg:hidden flex items-center gap-3 mb-8">
             <div className="w-10 h-10 flex items-center justify-center">
-              <img src="/SIPAlogo.png" alt="SIPA Logo" className="w-full h-full object-contain -scale-x-100" />
+              <img src="/SIPAlogo.png?v=2" alt="SIPA Logo" className="w-full h-full object-contain" />
             </div>
             <div>
               <div className="text-sm tracking-widest" style={{ color: "#0B1F3A", fontWeight: 700 }}>İSTANBUL ENERJİ</div>
@@ -114,7 +105,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="ad.soyad@istanbulenerji.com.tr"
+                placeholder="asoyad@enerji.istanbul"
                 className="w-full px-4 py-2.5 rounded-lg border outline-none transition-all"
                 style={{
                   background: "#ffffff",
@@ -195,7 +186,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
           </form>
 
           <p className="mt-8 text-xs text-center" style={{ color: "#8AAAC8" }}>
-            © 2024 İstanbul Enerji A.Ş. — SIPA v1.0
+            © 2026 İstanbul Enerji A.Ş. — SIPA v1.0
           </p>
         </div>
       </div>
