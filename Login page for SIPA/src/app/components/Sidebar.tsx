@@ -1,4 +1,5 @@
-import { FileText, MessageSquare, Sparkles, LogOut, Zap, Plus, ChevronRight, User } from "lucide-react";
+import { FileText, MessageSquare, Sparkles, LogOut, Zap, Plus, ChevronRight, User, MoreHorizontal, Trash2 } from "lucide-react";
+import { useState } from "react";
 
 export type ActiveView = "chat" | "pdf" | "create";
 
@@ -17,6 +18,7 @@ interface SidebarProps {
   activeConversationId: string | null;
   onConversationSelect: (id: string) => void;
   onNewConversation: () => void;
+  onDeleteConversation?: (id: string) => void;
   onLogout: () => void;
   userEmail: string;
 }
@@ -35,8 +37,10 @@ export function Sidebar({
   onConversationSelect,
   onNewConversation,
   onLogout,
+  onDeleteConversation,
   userEmail,
 }: SidebarProps) {
+  const [menuOpenId, setMenuOpenId] = useState<string | null>(null);
   const displayName = userEmail.split("@")[0].replace(".", " ").replace(/\b\w/g, (l) => l.toUpperCase());
 
   return (
@@ -132,36 +136,67 @@ export function Sidebar({
             {conversations.map((conv) => {
               const isActive = conv.id === activeConversationId;
               return (
-                <button
-                  key={conv.id}
-                  onClick={() => onConversationSelect(conv.id)}
-                  className="w-full text-left px-3 py-2.5 rounded-lg transition-all"
-                  style={{
-                    background: isActive ? "rgba(232,132,26,0.14)" : "transparent",
-                    border: isActive ? "1px solid rgba(232,132,26,0.25)" : "1px solid transparent",
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!isActive) (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.05)";
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!isActive) (e.currentTarget as HTMLElement).style.background = "transparent";
-                  }}
-                >
-                  <div className="flex items-start justify-between gap-2">
-                    <p
-                      className="text-xs truncate flex-1"
-                      style={{ color: isActive ? "#F5A93A" : "#C8D8EC", fontWeight: isActive ? 600 : 400 }}
-                    >
-                      {conv.title}
+                <div key={conv.id} className="relative group">
+                  <button
+                    onClick={() => onConversationSelect(conv.id)}
+                    className="w-full text-left px-3 py-2.5 rounded-lg transition-all"
+                    style={{
+                      background: isActive ? "rgba(232,132,26,0.14)" : "transparent",
+                      border: isActive ? "1px solid rgba(232,132,26,0.25)" : "1px solid transparent",
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!isActive) (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.05)";
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isActive) (e.currentTarget as HTMLElement).style.background = "transparent";
+                    }}
+                  >
+                    <div className="flex items-start justify-between gap-2 pr-6">
+                      <p
+                        className="text-xs truncate flex-1"
+                        style={{ color: isActive ? "#F5A93A" : "#C8D8EC", fontWeight: isActive ? 600 : 400 }}
+                      >
+                        {conv.title}
+                      </p>
+                      <span className="text-xs flex-shrink-0" style={{ color: "#5A7A9A" }}>
+                        {conv.time}
+                      </span>
+                    </div>
+                    <p className="text-xs mt-0.5 truncate" style={{ color: "#5A7A9A" }}>
+                      {conv.preview}
                     </p>
-                    <span className="text-xs flex-shrink-0" style={{ color: "#5A7A9A" }}>
-                      {conv.time}
-                    </span>
-                  </div>
-                  <p className="text-xs mt-0.5 truncate" style={{ color: "#5A7A9A" }}>
-                    {conv.preview}
-                  </p>
-                </button>
+                  </button>
+
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setMenuOpenId(menuOpenId === conv.id ? null : conv.id);
+                    }}
+                    className={`absolute right-2 top-2 w-6 h-6 rounded flex items-center justify-center transition-colors ${menuOpenId === conv.id ? "opacity-100 bg-white/10" : "opacity-0 group-hover:opacity-100 hover:bg-white/10"}`}
+                    style={{ color: "#8AAAC8" }}
+                  >
+                    <MoreHorizontal size={14} />
+                  </button>
+
+                  {menuOpenId === conv.id && (
+                    <div 
+                      className="absolute right-2 top-9 w-24 rounded-lg py-1 z-50 shadow-lg"
+                      style={{ background: "#1A4A7A", border: "1px solid rgba(255,255,255,0.1)" }}
+                    >
+                      <button
+                        className="w-full text-left px-3 py-1.5 text-xs text-red-400 hover:bg-white/10 flex items-center gap-2 transition-colors"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setMenuOpenId(null);
+                          if (onDeleteConversation) onDeleteConversation(conv.id);
+                        }}
+                      >
+                        <Trash2 size={12} />
+                        Sil
+                      </button>
+                    </div>
+                  )}
+                </div>
               );
             })}
           </div>

@@ -86,6 +86,18 @@ export default function App() {
     setActiveConvId(id);
   }, []);
 
+  const handleDeleteConversation = useCallback((id: string) => {
+    setConversations((prev) => prev.filter((c) => c.id !== id));
+    setConvData((prev) => {
+      const newData = { ...prev };
+      delete newData[id];
+      return newData;
+    });
+    if (activeConvId === id) {
+      setActiveConvId(null);
+    }
+  }, [activeConvId]);
+
   const handleSendMessage = useCallback(
     async (content: string) => {
       if (!activeConvId) return;
@@ -148,6 +160,7 @@ export default function App() {
         activeConversationId={activeConvId}
         onConversationSelect={setActiveConvId}
         onNewConversation={handleNewConversation}
+        onDeleteConversation={handleDeleteConversation}
         onLogout={handleLogout}
         userEmail={userEmail}
       />

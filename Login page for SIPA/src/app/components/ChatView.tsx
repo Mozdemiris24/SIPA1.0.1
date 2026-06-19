@@ -208,25 +208,6 @@ export function ChatView({ conversation, onSendMessage, isLoading }: ChatViewPro
             </span>
           </div>
         </div>
-        {conversation && (
-          <div className="ml-auto">
-            <button
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-colors"
-              style={{ color: "#5A6880", border: "1px solid rgba(11,31,58,0.1)" }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#F4F6FA";
-                e.currentTarget.style.color = "#E8841A";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "transparent";
-                e.currentTarget.style.color = "#5A6880";
-              }}
-            >
-              <RotateCcw size={12} />
-              Yeni Sohbet
-            </button>
-          </div>
-        )}
       </div>
 
       {/* Messages */}
@@ -299,7 +280,7 @@ export function ChatView({ conversation, onSendMessage, isLoading }: ChatViewPro
             value={input}
             onChange={handleTextareaChange}
             onKeyDown={handleKeyDown}
-            placeholder="Bir şey sorun... (Enter göndermek için, Shift+Enter yeni satır)"
+            placeholder="Neye ihtiyacınız vardı?"
             className="flex-1 bg-transparent outline-none resize-none text-sm leading-relaxed"
             style={{
               color: "#0B1F3A",
@@ -323,7 +304,7 @@ export function ChatView({ conversation, onSendMessage, isLoading }: ChatViewPro
           </button>
         </div>
         <p className="text-center text-xs mt-2" style={{ color: "#8AAAC8" }}>
-          SIPA yapay zeka hataları olabilir. Önemli bilgileri doğrulayın.
+          SIPA bir yapay zeka asistanı, hataları olabilir. Önemli bilgileri doğrulayın.
         </p>
       </div>
     </div>
